@@ -56,10 +56,9 @@ import os
 import shutil
 import datetime
 
-# ⑥、⑦、⑧の操作を実行
 increment = 300  # 削る文字数
 th_inc = increment
-added_count_A = 155  # 追加されたAの数のカウント
+added_count_A = 155  # 追加されたAの数のカウント(⇒要変更、自動で取得したい)
 
 additional_rows = []
 
@@ -92,6 +91,7 @@ df2 = df.append(additional_rows, ignore_index=True)
 # ちょっと中身の確認
 print(df2.head(5))
 print(df2.tail(5))
+
 
 #DAしたデータ個数の表示
 
@@ -135,7 +135,6 @@ df2 = pd.read_excel(file_path, engine="openpyxl")
 # '重要度'が'B'の行を選別
 a_rows = df2[df2['重要度'] == 'B']
 
-# ⑥、⑦、⑧の操作を実行
 increment = 300  # 削る文字数
 th_inc = increment
 added_count_B = 527  # 追加されたBの数のカウント
@@ -209,12 +208,12 @@ os.remove(tmp_path) #仮作成したxlsxを削除
 file_path ='/Volumes/main/default/public/personal/0199667/PatentClassification_Preprocessing/A増やしてみた.xlsx'
 df3 = pd.read_excel(file_path, engine="openpyxl")
 """
-# '重要度'が'B'の行を選別
+# '重要度'が'C'の行を選別
 a_rows = df3[df3['重要度'] == 'C']
 
 increment = 300  # 削る文字数
 th_inc = increment
-added_count_C = 3356  # 追加されたBの数のカウント
+added_count_C = 3356  # 追加されたCの数のカウント
 
 additional_rows = []
 
