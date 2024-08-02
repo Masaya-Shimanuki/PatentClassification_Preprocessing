@@ -18,7 +18,7 @@ df = pd.read_excel(file_path, engine="openpyxl")
 if '重要度' not in df.columns:
     raise KeyError("カラムネームをチェックしてください")
 
-# 各アルファベットの個数をカウントして表示する
+# 各ランクの個数をカウントして表示する
 importance_counts = df['重要度'].value_counts()
 print(importance_counts)
 
@@ -40,14 +40,19 @@ for col in required_columns:
 # 「請求の範囲」「実施例」の文字を結合し、「請求の範囲」のカラムに格納する
 df['請求の範囲'] = df['請求の範囲'].astype(str) + df['実施例'].astype(str)
 
-# 「重要度」に含まれる各アルファベットの個数をカウントして表示する
+# 「重要度」に含まれる各ランクの個数をカウントして表示する
 importance_counts = df['重要度'].value_counts()
 print(importance_counts)
 
-# 「重要度」に含まれる各アルファベットの個数の最大値をAug_maxとする
+# 「重要度」に含まれる各ランクの個数の最大値をAug_maxとする
 Aug_max = importance_counts.max()
 print(f"Aug_max: {Aug_max}")
 
+# 「重要度」に含まれるA,B,Cの個数をカウント
+Aug_A = importance_counts['A']
+Aug_B = importance_counts['B']
+Aug_C = importance_counts['C']
+print("A:",Aug_A, "B:",Aug_B, "C:",Aug_C)
 
 # COMMAND ----------
 
@@ -58,7 +63,7 @@ import datetime
 
 increment = 300  # 削る文字数
 th_inc = increment
-added_count_A = 155  # 追加されたAの数のカウント(⇒要変更、自動で取得したい)
+added_count_A = Aug_A  # 追加されたAの数のカウント(元のデータ数からカウント)
 
 additional_rows = []
 
@@ -137,7 +142,7 @@ a_rows = df2[df2['重要度'] == 'B']
 
 increment = 300  # 削る文字数
 th_inc = increment
-added_count_B = 527  # 追加されたBの数のカウント
+added_count_B = Aug_B  # 追加されたBの数のカウント
 
 additional_rows = []
 
@@ -213,7 +218,7 @@ a_rows = df3[df3['重要度'] == 'C']
 
 increment = 300  # 削る文字数
 th_inc = increment
-added_count_C = 3356  # 追加されたCの数のカウント
+added_count_C = Aug_C  # 追加されたCの数のカウント
 
 additional_rows = []
 
@@ -261,6 +266,11 @@ plt.xlabel('Importance Level')
 plt.ylabel('Count')
 plt.show()
 
+
+
+# COMMAND ----------
+
+#最終的に出力したデータをエクセルファイルとして出力。Databricksの仕様上、一旦tempファイルに書き出してコピーします
 
 output_filename = '/Volumes/main/default/public/personal/0199667/PatentClassification_Preprocessing/ABC増やしてみた.xlsx'
 now_= datetime.datetime.now()
